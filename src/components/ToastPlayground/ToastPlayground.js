@@ -9,14 +9,14 @@ const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
   const [ message, setMessage ] = React.useState('');
-  const [ variant, setVariant ] = React.useState('notice');
+  const [ variant, setVariant ] = React.useState(VARIANT_OPTIONS[0]);
   const { createToast } = React.useContext(ToastsContext);
 
   function handleSubmit(event) {
     event.preventDefault();
     createToast(message, variant);
     setMessage('');
-    setVariant('notice');
+    setVariant(VARIANT_OPTIONS[0]);
   }
 
   return (
@@ -57,10 +57,12 @@ function ToastPlayground() {
           <div
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            {VARIANT_OPTIONS.map((value, index) => (
-                <label key={`variant-${index}`} htmlFor={`variant-${value}`}>
+            {VARIANT_OPTIONS.map((value) => {
+              const id = `variant-${value}`;
+              return (
+                <label key={id} htmlFor={id}>
                 <input
-                  id={`variant-${value}`}
+                  id={id}
                   type="radio"
                   name="variant"
                   value={value}
@@ -71,7 +73,7 @@ function ToastPlayground() {
                 />
                   {value}
                 </label>
-            ))}
+            )})}
           </div>
         </div>
 
